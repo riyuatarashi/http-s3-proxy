@@ -1,5 +1,7 @@
 # HTTP S3 Proxy
 
+https://github.com/riyuatarashi/http-s3-proxy/actions/workflows/rust.yml/badge.svg
+
 A simple HTTP proxy server that serves files from S3-compatible storage services.
 
 ## Features
