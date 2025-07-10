@@ -10,7 +10,6 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        rust: [stable]
     runs-on: ${{ matrix.platform.os }}
 
     steps:
