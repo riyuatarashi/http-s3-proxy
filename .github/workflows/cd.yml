@@ -28,7 +28,10 @@ jobs:
           target: ${{ matrix.os.target }}
           override: true
 
-      - name: Audit Dependencies
+      - name: Install audit Dependencies
+        run: cargo install cargo-audit --locked
+        
+      - name: Run cargo audit
         run: cargo audit
 
       - name: Build
