@@ -43,7 +43,7 @@ jobs:
         shell: bash
 
       - name: Save Build Artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.os.target }}-artifacts
           path: target/${{ matrix.os.target }}/release
