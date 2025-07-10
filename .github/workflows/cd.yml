@@ -16,7 +16,7 @@ jobs:
             target: x86_64-pc-windows-msvc
           - os: macos-latest
             target: x86_64-apple-darwin
-    runs-on: ${{ matrix.platform.os }}
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v4
@@ -25,14 +25,14 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.platform.target }}
+          target: ${{ matrix.os.target }}
           override: true
 
       - name: Audit Dependencies
         run: cargo audit
 
       - name: Build
-        run: cargo build --release --target ${{ matrix.platform.target }}
+        run: cargo build --release --target ${{ matrix.os.target }}
 
       - name: Package binary
         run: |
@@ -45,13 +45,13 @@ jobs:
       - name: Save Build Artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.platform.target }}-artifacts
-          path: target/${{ matrix.platform.target }}/release
+          name: ${{ matrix.os.target }}-artifacts
+          path: target/${{ matrix.os.target }}/release
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/${{ matrix.platform.target }}.tar.gz
+          files: dist/${{ matrix.os.target }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN_PERMISSIONS: write:packages
