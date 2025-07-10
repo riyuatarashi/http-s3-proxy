@@ -25,7 +25,7 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
-          target: ${{ matrix.os.target }}
+          target: ${{ matrix.target }}
           override: true
 
       - name: Install audit Dependencies
@@ -35,26 +35,26 @@ jobs:
         run: cargo audit
 
       - name: Build
-        run: cargo build --release --target ${{ matrix.os.target }}
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Package binary
         run: |
           mkdir dist
-          cp target/${{ matrix.platform.target }}/release/http-s3-proxy dist/
+          cp target/${{ matrix.target }}/release/http-s3-proxy dist/
           cd dist
-          tar -czvf ${{ matrix.platform.target }}.tar.gz http-s3-proxy
+          tar -czvf ${{ matrix.target }}.tar.gz http-s3-proxy
         shell: bash
 
       - name: Save Build Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os.target }}-artifacts
-          path: target/${{ matrix.os.target }}/release
+          name: ${{ matrix.target }}-artifacts
+          path: target/${{ matrix.target }}/release
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
         with:
-          files: dist/${{ matrix.os.target }}.tar.gz
+          files: dist/${{ matrix.target }}.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_TOKEN_PERMISSIONS: write:packages
